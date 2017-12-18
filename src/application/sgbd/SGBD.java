@@ -27,4 +27,8 @@ public class SGBD {
         conn.close();
     }
 
+    //SELECT "nomCommune" FROM communes where "codeDepartement" = '76';
+    //\dt
+    // SELECT "nomCommune", "codeDepartement" FROM communes where "codeInsee" = '76540';
+
 }
