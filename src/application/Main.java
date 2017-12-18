@@ -1,5 +1,8 @@
+package application;
+
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import sgbd.SGBD;
 
 public class Main {
     public static void main (String[] args){
