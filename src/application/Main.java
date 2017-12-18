@@ -3,6 +3,7 @@ package application;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 import application.sgbd.SGBD;
+import java.sql.*;
 
 public class Main {
     public static void main (String[] args){
@@ -16,7 +17,22 @@ public class Main {
         graph.addEdge("CA", "C", "A");
         graph.display();
         SGBD bdConnection = new SGBD();
-        bdConnection.getConnection();
+        Connection con = bdConnection.getConnection();
 
+        ResultSet resultats = null;
+        String requete = "SELECT * FROM communes where \"codeInsee\" = '76540';";
+
+
+        //request exemple
+        try {
+            Statement stmt = con.createStatement();
+            resultats = stmt.executeQuery(requete);
+            resultats.next();
+            // ResultSetMetaData rsmd;
+            // rsmd = results.getMetaData();
+            System.out.println("resultats : "+resultats.getString("nomCommune"));
+        } catch (SQLException e) {
+            System.out.println("exception"+e.getMessage());
+        }
     }
 }
