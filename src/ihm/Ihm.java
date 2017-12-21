@@ -19,15 +19,19 @@ public class Ihm {
 	 *  1 : France
 	 *  2 : Département
 	 *  3 : Commune
-	 */
+	 *  4 : Parcelle
+	 *  5 : Cadastre
+	 *  */
 	public static int getScale(){
 		//Print text
 		System.out.println("");
 		System.out.println("A quelle échelle voulez-vous voir les données ? ");
 		System.out.println("Séletionnez la lettre correspondant à l'échelle que vous souhaitez, puis appuyez sur Entrée");
-		System.out.println("f : France");
-		System.out.println("d : Département");
-		System.out.println("c : Commune");
+		System.out.println("f  : France");
+		System.out.println("d  : Département");
+		System.out.println("c  : Commune");
+		System.out.println("p  : Département");
+		System.out.println("ca : Commune");
 		
 		//Initialization
 		int scale = 0;
@@ -45,6 +49,12 @@ public class Ihm {
 				break;
 			case "c": scale = 3;
 					selected = "Vous avez sélectionné l'échelle de la commune";
+				break;
+			case "p": scale = 4;
+			selected = "Vous avez sélectionné l'échelle de la parcelle";
+				break;
+			case "ca": scale = 5;
+			selected = "Vous avez sélectionné l'échelle du cadastre";
 				break;
 			default : selected = "Entrée invalide. Veuillez réessayer";
 				break;
@@ -64,6 +74,12 @@ public class Ihm {
 			break;
 		case 3: //Commune 
 			System.out.println("Quelle commune voulez-vous voir ? ");
+			break;
+		case 4: //Commune 
+			System.out.println("Quelle parcelle voulez-vous voir ? ");
+			break;
+		case 5: //Commune 
+			System.out.println("Quel cadastre voulez-vous voir ? ");
 			break;
 		default : 
 			break;
@@ -118,7 +134,6 @@ public class Ihm {
 		return askForDates;
 	}
 	
-	//A completer
 	public static String getOneDate(boolean start){
 		//Print text
 		System.out.println("");
@@ -128,19 +143,20 @@ public class Ihm {
 		}else
 			time = "fin";
 		System.out.println("Veuillez saisir la date de "+time+" de l'intervalle de temps");
-		System.out.println("Ecrivez la date au format '         ', puis appuyez sur Entrée"); //A completer
-		
+		System.out.println("Ecrivez la date en respectant le format suivant 'AAAA-MM-JJ hh:mm:ss.cc' sans les guillements, puis appuyez sur Entrée"); //A completer
+		System.out.println("Par exemple, pour le 30 décembre 2010 à 18h50 et 21 secondes, écrivez '2010-12-30 18:50:21.00'");
+				
 		String date = "";
 		String selected;
 		
 		//While the input is not correct, ask for another input
 		while (date == ""){
 			String str = sc.nextLine();
-			//if (str.matches("[0-9]+")){			//A completer
+			if (str.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9]")){			//A completer  
 				date = str;
 				selected = "Vous avez saisi "+date;
-			//}
-			//else selected = "Entrée invalide. Veuillez réessayer";
+			}
+			else selected = "Entrée invalide. Veuillez réessayer";
 			System.out.println(selected);
 		}	
 		return date;
@@ -156,7 +172,7 @@ public class Ihm {
 		userInputs = new UserInputs();
 		int scale = getScale();
 		userInputs.setScale(scale);
-		if (scale >1){ //For Departement or Commune
+		if (scale >1){ //For Departement or Commune or other small scale
 			userInputs.setZoneID(getLocalID(scale));
 		}
 		boolean useDates = filtreByDate();
