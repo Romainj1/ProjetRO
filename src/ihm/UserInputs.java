@@ -1,27 +1,27 @@
 package ihm;
 
 public class UserInputs {
-	
+
 	private int scale;
 	/*  1 : France
-	 *  2 : Département
+	 *  2 : DÃ©partement
 	 *  3 : Commune
 	 *  4 : Parcelle
 	 *  5 : Cadastre
 	 *  */
-	
+
 	private String zoneID;
-	/*  numéro de département ou code postal, 
-	 *  éventuellement id de parcelle ou de cadastre */
-	
+	/*  numÃ©ro de dÃ©partement ou code postal,
+	 *  Ã©ventuellement id de parcelle ou de cadastre */
+
 	private boolean useDates;
-	/*  True si des dates ont été précisées, False sinon */
-	
-	private String startDate; 
-	/*  Date de début de l'intervalle de temps */
+	/*  True si des dates ont Ã©tÃ© prÃ©cisÃ©es, False sinon */
+
+	private String startDate;
+	/*  Date de dÃ©but de l'intervalle de temps */
 	private String endDate;
 	/*  Date de fin de l'intervalle de temps */
-	
+
 	public int getScale() {
 		return scale;
 	}
@@ -52,7 +52,5 @@ public class UserInputs {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
+
 }
-
-

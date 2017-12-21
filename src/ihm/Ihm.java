@@ -2,22 +2,22 @@ package ihm;
 import java.util.Scanner;
 
 public class Ihm {
-	
+
 	private static UserInputs userInputs;
-	
+
 	private static Scanner sc;
-	
+
 	private static void openScanner(){
 		sc = new Scanner(System.in);
 	}
-	
+
 	private static void closeScanner(){
 		sc.close();
 	}
-	
-	/* returns scale 
+
+	/* returns scale
 	 *  1 : France
-	 *  2 : Département
+	 *  2 : DÃ©partement
 	 *  3 : Commune
 	 *  4 : Parcelle
 	 *  5 : Cadastre
@@ -25,43 +25,43 @@ public class Ihm {
 	public static int getScale(){
 		//Print text
 		System.out.println("");
-		System.out.println("A quelle échelle voulez-vous voir les données ? ");
-		System.out.println("Séletionnez la lettre correspondant à l'échelle que vous souhaitez, puis appuyez sur Entrée");
+		System.out.println("A quelle Ã©chelle voulez-vous voir les donnÃ©es ? ");
+		System.out.println("SÃ©letionnez la lettre correspondant Ã© l'Ã©chelle que vous souhaitez, puis appuyez sur EntrÃ©e");
 		System.out.println("f  : France");
-		System.out.println("d  : Département");
+		System.out.println("d  : DÃ©partement");
 		System.out.println("c  : Commune");
-		System.out.println("p  : Département");
+		System.out.println("p  : DÃ©partement");
 		System.out.println("ca : Commune");
-		
+
 		//Initialization
 		int scale = 0;
 		String selected;
-		
+
 		//While the input is not correct, ask for another input
 		while (scale == 0){
 			String str = sc.nextLine();
 			switch(str){
 			case "f": scale = 1;
-					selected = "Vous avez sélectionné l'échelle de la France";
+					selected = "Vous avez sÃ©lectionnÃ© l'Ã©chelle de la France";
 				break;
 			case "d": scale = 2;
-					selected = "Vous avez sélectionné l'échelle du département";
+					selected = "Vous avez sÃ©lectionnÃ© l'Ã©chelle du dÃ©partement";
 				break;
 			case "c": scale = 3;
-					selected = "Vous avez sélectionné l'échelle de la commune";
+					selected = "Vous avez sÃ©lectionnÃ© l'Ã©chelle de la commune";
 				break;
 			case "p": scale = 4;
-			selected = "Vous avez sélectionné l'échelle de la parcelle";
+			selected = "Vous avez sÃ©lectionnÃ© l'Ã©chelle de la parcelle";
 				break;
 			case "ca": scale = 5;
-			selected = "Vous avez sélectionné l'échelle du cadastre";
+			selected = "Vous avez sÃ©lectionnÃ© l'Ã©chelle du cadastre";
 				break;
-			default : selected = "Entrée invalide. Veuillez réessayer";
+			default : selected = "EntrÃ©e invalide. Veuillez rÃ©essayer";
 				break;
 			}
 			System.out.println(selected);
 		}
-		
+
 		return scale;
 	}
 
@@ -69,54 +69,54 @@ public class Ihm {
 		//Print text
 		System.out.println("");
 		switch(scale){
-		case 2: //Département
-			System.out.println("Quel département voulez-vous voir ? ");
+		case 2: //DÃ©partement
+			System.out.println("Quel dÃ©partement voulez-vous voir ? ");
 			break;
-		case 3: //Commune 
+		case 3: //Commune
 			System.out.println("Quelle commune voulez-vous voir ? ");
 			break;
-		case 4: //Commune 
+		case 4: //Commune
 			System.out.println("Quelle parcelle voulez-vous voir ? ");
 			break;
-		case 5: //Commune 
+		case 5: //Commune
 			System.out.println("Quel cadastre voulez-vous voir ? ");
 			break;
-		default : 
+		default :
 			break;
 		}
-		System.out.println("Tapez le numéro, puis appuyez sur Entrée ");
-		
+		System.out.println("Tapez le numÃ©ro, puis appuyez sur EntrÃ©e ");
+
 		//Initialization
 		String ID = "";
 		String selected;
-		
+
 		//While the input is not correct, ask for another input
 		while (ID == ""){
 			String str = sc.nextLine();
 			if (str.matches("[0-9]+")){
 				ID = str;
-				selected = "Vous avez séléctionné "+ID;
+				selected = "Vous avez sÃ©lÃ©ctionnÃ© "+ID;
 			}
-			else selected = "Entrée invalide. Veuillez réessayer";
+			else selected = "EntrÃ©e invalide. Veuillez rÃ©essayer";
 			System.out.println(selected);
 		}
-		
+
 		return ID;
-		
+
 	}
-	
+
 	public static boolean filtreByDate(){
 		//Print text
 		System.out.println("");
-		System.out.println("Voulez-vous préciser un intervalle de temps pour voir les données ? ");
-		System.out.println("Séletionnez l'option désirée, puis appuyez sur Entrée");
+		System.out.println("Voulez-vous prÃ©ciser un intervalle de temps pour voir les donnÃ©es ? ");
+		System.out.println("SÃ©letionnez l'option dÃ©sirÃ©e, puis appuyez sur EntrÃ©e");
 		System.out.println("o : Oui");
 		System.out.println("n : Non");
-		
+
 		//Initialization
 		boolean askForDates = false;
 		boolean userHasAnswered = false;
-				
+
 		//While the input is not correct, ask for another input
 		while (!userHasAnswered){
 			String str = sc.nextLine();
@@ -126,47 +126,47 @@ public class Ihm {
 				break;
 			case "n": userHasAnswered = true;
 				break;
-			default: System.out.println("Entrée invalide. Veuillez réessayer"); 
+			default: System.out.println("EntrÃ©e invalide. Veuillez rÃ©essayer");
 				break;
 			}
-			
-		}		
+
+		}
 		return askForDates;
 	}
-	
+
 	public static String getOneDate(boolean start){
 		//Print text
 		System.out.println("");
 		String time;
 		if (start){
-			time = "début";
+			time = "dÃ©but";
 		}else
 			time = "fin";
 		System.out.println("Veuillez saisir la date de "+time+" de l'intervalle de temps");
-		System.out.println("Ecrivez la date en respectant le format suivant 'AAAA-MM-JJ hh:mm:ss.cc' sans les guillements, puis appuyez sur Entrée"); //A completer
-		System.out.println("Par exemple, pour le 30 décembre 2010 à 18h50 et 21 secondes, écrivez '2010-12-30 18:50:21.00'");
-				
+		System.out.println("Ecrivez la date en respectant le format suivant 'AAAA-MM-JJ hh:mm:ss.cc' sans les guillements, puis appuyez sur EntrÃ©e"); //A completer
+		System.out.println("Par exemple, pour le 30 dÃ©cembre 2010 Ã© 18h50 et 21 secondes, Ã©crivez '2010-12-30 18:50:21.00'");
+
 		String date = "";
 		String selected;
-		
+
 		//While the input is not correct, ask for another input
 		while (date == ""){
 			String str = sc.nextLine();
-			if (str.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9]")){			//A completer  
+			if (str.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9]")){			//A completer
 				date = str;
 				selected = "Vous avez saisi "+date;
 			}
-			else selected = "Entrée invalide. Veuillez réessayer";
+			else selected = "EntrÃ©e invalide. Veuillez rÃ©essayer";
 			System.out.println(selected);
-		}	
+		}
 		return date;
 	}
-	
+
 	public static UserInputs getUserInputs(){
 		askUserInputs();
 		return userInputs;
 	}
-	
+
 	public static void askUserInputs(){
 		openScanner();
 		userInputs = new UserInputs();
@@ -183,12 +183,12 @@ public class Ihm {
 		}
 		closeScanner();
 	}
-	
-	
+
+
 	public static void main(String [ ] args){
 		UserInputs ui = getUserInputs();
 	}
-	
-	
-	
+
+
+
 }

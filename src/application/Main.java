@@ -3,6 +3,7 @@ package application;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
 import application.sgbd.SGBD;
+import application.sgbd.BdSeineMaritime;
 import java.sql.*;
 
 public class Main {
@@ -16,7 +17,9 @@ public class Main {
         graph.addEdge("BC", "B", "C");
         graph.addEdge("CA", "C", "A");
         graph.display();
-        SGBD bdConnection = new SGBD();
+
+
+        BdSeineMaritime bdConnection = new BdSeineMaritime();
         Connection con = bdConnection.getConnection();
 
         ResultSet resultats = null;
