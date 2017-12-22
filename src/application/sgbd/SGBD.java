@@ -5,11 +5,14 @@ import java.sql.SQLException;
 
 public class SGBD {
 
-    private static String bd = "jdbc:postgresql://asi-pg.insa-rouen.fr:5432/orange-12";
+    protected static String bd ;
     private static String user = "grtt12";
     private static String passwd = "grtt12";
 
     private static Connection conn;
+    public SGBD(String bd){
+      this.bd = bd;
+    }
 
     public static Connection getConnection() {
         if (conn == null) {

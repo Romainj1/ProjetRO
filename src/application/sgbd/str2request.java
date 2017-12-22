@@ -6,9 +6,9 @@ import ihm.UserInputs;
 
 
 public class str2request {
-  private SGBD bdConnection;
+  private BdOrange bdConnection;
   public str2request(){
-    this.bdConnection = new SGBD();
+    this.bdConnection = new BdOrange();
   }
 
   public ResultSet requeteCarte(UserInputs in){
