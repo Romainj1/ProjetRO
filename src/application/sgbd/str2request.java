@@ -6,28 +6,58 @@ import ihm.UserInputs;
 
 
 public class str2request {
-  private BdOrange bdConnection;
+  private BdOrange bdFrance;
+  private BdSeineMaritime bdsm;
   public str2request(){
-    this.bdConnection = new BdOrange();
+    this.bdFrance = new BdOrange();
+    this.bdsm = new BdSeineMaritime();
   }
 
   public ResultSet requeteCarte(UserInputs in){
-    if (in.getScale() == 2){
-      Connection con = this.bdConnection.getConnection();
-      ResultSet resultats = null;
-      String requete  =  "Select * from communes where \"codeDepartement\"='"+in.getZoneID()+"'";
+    ResultSet resultats = null;
+    String requete;
+    Connection con;
+    switch(in.getScale()){
+      case 1 :
+      con = this.bdFrance.getConnection();
+      requete = "Select * from limitesdepartements";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
         resultats.next();
-        bdConnection.deconnexion();
+        bdFrance.deconnexion();
       }catch (SQLException e){
         e.printStackTrace();
         return null;
       }
-      return resultats;
+      break;
+      case 2 :
+      con = this.bdFrance.getConnection();
+      requete  =  "Select * from communes where \"codeDepartement\"='"+in.getZoneID()+"'";
+      try{
+        Statement stmt = con.createStatement();
+        resultats = stmt.executeQuery(requete);
+        resultats.next();
+        bdFrance.deconnexion();
+      }catch (SQLException e){
+        e.printStackTrace();
+        return null;
+      }
+      break;
+      case 3 :
+      con = this.bdsm.getConnection();
+      requete = "Select * from cadastre where \"code_com\"='"+in.getZoneID()+"'";
+      try{
+        Statement stmt = con.createStatement();
+        resultats = stmt.executeQuery(requete);
+        resultats.next();
+        bdsm.deconnexion();
+      }catch (SQLException e){
+        e.printStackTrace();
+        return null;
+      }
     }
-    return null;
+    return resultats;
 
   }
 
