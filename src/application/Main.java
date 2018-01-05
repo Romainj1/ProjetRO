@@ -31,7 +31,7 @@ public class Main {
         Connection con = bdConnection.getConnection();
 
         ResultSet resultats = null;
-        String requete = "SELECT * FROM communes where \"codeInsee\" = '76540';";
+        String requete = "SELECT * FROM commune where \"codeInsee\" = '76540';";
 
 
         //request exemple
