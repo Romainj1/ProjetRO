@@ -23,8 +23,8 @@ public class Main {
         graph.display();
         UserInputs ui = Ihm.getUserInputs();
         str2request s2r = new str2request();
-        //ResultSet rs = s2r.requeteCarte(ui);
-        //System.out.println(rs.toString());
+        ResultSet rs = s2r.requeteCarte(ui);
+        System.out.println(rs.toString());
 
 
         BdOrange bdConnection = new BdOrange();
@@ -32,8 +32,6 @@ public class Main {
 
         ResultSet resultats = null;
         String requete = "SELECT * FROM communes where \"codeInsee\" = '76540';";
-
-
         //request exemple
         try {
             Statement stmt = con.createStatement();
@@ -42,6 +40,24 @@ public class Main {
             // ResultSetMetaData rsmd;
             // rsmd = results.getMetaData();
             System.out.println("resultats : "+resultats.getString("nomCommune"));
+        } catch (SQLException e) {
+            System.out.println("exception"+e.getMessage());
+        }
+
+
+        BdSeineMaritime sm = new BdSeineMaritime();
+        Connection consm = sm.getConnection();
+
+        ResultSet resultats2 = null;
+        String requete2 = "SELECT gid FROM limitesdepartements;";
+        //request exemple
+        try {
+            Statement stmt2 = consm.createStatement();
+            resultats2 = stmt2.executeQuery(requete);
+            resultats2.next();
+            // ResultSetMetaData rsmd;
+            // rsmd = results.getMetaData();
+            System.out.println("resultats : "+resultats2.getString("gid"));
         } catch (SQLException e) {
             System.out.println("exception"+e.getMessage());
         }
