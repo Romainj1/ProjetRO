@@ -4,15 +4,12 @@ public class UserInputs {
 
 	private int scale;
 	/*  1 : France
-	 *  2 : DEpartement
+	 *  2 : Departement
 	 *  3 : Commune
-	 *  4 : Parcelle
-	 *  5 : Cadastre
 	 *  */
 
 	private String zoneID;
-	/*  numEro de departement ou code postal,
-	 *  Eventuellement id de parcelle ou de cadastre */
+	/*  numero de departement ou code postal */
 
 	private boolean useDates;
 	/*  True si des dates ont ete precisees, False sinon */
