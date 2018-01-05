@@ -23,8 +23,8 @@ public class Main {
         graph.display();
         UserInputs ui = Ihm.getUserInputs();
         str2request s2r = new str2request();
-        ResultSet rs = s2r.requeteCarte(ui);
-        System.out.println(rs.toString());
+        //ResultSet rs = s2r.requeteCarte(ui);
+        //System.out.println(rs.toString());
 
 
        BdSeineMaritime bdConnection = new BdSeineMaritime();
