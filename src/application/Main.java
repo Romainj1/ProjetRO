@@ -27,7 +27,7 @@ public class Main {
         System.out.println(rs.toString());
 
 
-       /* BdSeineMaritime bdConnection = new BdSeineMaritime();
+       BdSeineMaritime bdConnection = new BdSeineMaritime();
         Connection con = bdConnection.getConnection();
 
         ResultSet resultats = null;
@@ -44,6 +44,6 @@ public class Main {
             System.out.println("resultats : "+resultats.getString("nomCommune"));
         } catch (SQLException e) {
             System.out.println("exception"+e.getMessage());
-        }*/
+        }
     }
 }
