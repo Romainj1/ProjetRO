@@ -20,7 +20,7 @@ public class str2request {
     switch(in.getScale()){
       case 1 :
       con = this.bdFrance.getConnection();
-      requete = "Select * from limitesdepartements";
+      requete = "Select * from limitesdepartements;";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
@@ -33,7 +33,7 @@ public class str2request {
       break;
       case 2 :
       con = this.bdFrance.getConnection();
-      requete  =  "Select * from communes where \"codeDepartement\"='"+in.getZoneID()+"'";
+      requete  =  "Select * from communes where \"codeDepartement\"='"+in.getZoneID()+"';";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
@@ -46,7 +46,7 @@ public class str2request {
       break;
       case 3 :
       con = this.bdsm.getConnection();
-      requete = "Select * from cadastre where \"code_com\"='"+in.getZoneID()+"'";
+      requete = "Select * from cadastre where \"code_com\"='"+in.getZoneID()+"';";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
@@ -56,9 +56,51 @@ public class str2request {
         e.printStackTrace();
         return null;
       }
+
     }
     return resultats;
-
   }
 
+
+  public ResultSet requeteTel(UserInputs in){
+    ResultSet resultats = null;
+    String requete = "";
+    Connection con;
+    con = this.bdFrance.getConnection();
+    if (in.isUseDates()){
+      switch(in.getScale()){
+        case 1 :
+          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"';";
+        break;
+        case 2 :
+          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idDepartement\"='"+in.getZoneID()+"';";
+        break;
+        case 3 :
+          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idCommune\"='"+in.getZoneID()+"';";
+        break;
+      }
+    }else{
+      switch(in.getScale()){
+        case 1 :
+          requete = "Select * from spatialisation;";
+        break;
+        case 2 :
+          requete = "Select * from spatialisation where \"idDepartement\"='"+in.getZoneID()+"';";
+        break;
+        case 3 :
+          requete = "Select * from spatialisation where \"idCommune\"='"+in.getZoneID()+"';";
+        break;
+    }
+  }
+  try{
+    Statement stmt = con.createStatement();
+    resultats = stmt.executeQuery(requete);
+    resultats.next();
+    bdFrance.deconnexion();
+  }catch (SQLException e){
+    e.printStackTrace();
+    return null;
+  }
+  return resultats;
+  }
 }
