@@ -39,6 +39,7 @@ public class Ihm {
 
 		//While the input is not correct, ask for another input
 		while (scale == 0){
+			sc = new Scanner(System.in);
 			String str = sc.nextLine();
 			switch(str){
 			case "f": scale = 1;
