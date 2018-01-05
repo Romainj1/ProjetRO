@@ -19,8 +19,6 @@ public class Ihm {
 	 *  1 : France
 	 *  2 : Departement
 	 *  3 : Commune
-	 *  4 : Parcelle
-	 *  5 : Cadastre
 	 *  */
 	public static int getScale(){
 		//Print text
@@ -30,8 +28,10 @@ public class Ihm {
 		System.out.println("f  : France");
 		System.out.println("d  : Departement");
 		System.out.println("c  : Commune");
-		System.out.println("p  : Departement");
-		System.out.println("ca : Commune");
+		/*
+		System.out.println("p  : Parcelle");
+		System.out.println("ca : Cadastre");
+		*/
 
 		//Initialization
 		int scale = 0;
@@ -50,12 +50,14 @@ public class Ihm {
 			case "c": scale = 3;
 					selected = "Vous avez selectionne l'echelle de la commune";
 				break;
+			/*
 			case "p": scale = 4;
 			selected = "Vous avez selectionne l'echelle de la parcelle";
 				break;
 			case "ca": scale = 5;
 			selected = "Vous avez selectionne l'echelle du cadastre";
 				break;
+			*/
 			default : selected = "Entree invalide. Veuillez reessayer";
 				break;
 			}
@@ -75,12 +77,14 @@ public class Ihm {
 		case 3: //Commune
 			System.out.println("Quelle commune voulez-vous voir ? ");
 			break;
-		case 4: //Commune
+		/*
+		case 4: //Parcelle
 			System.out.println("Quelle parcelle voulez-vous voir ? ");
 			break;
-		case 5: //Commune
+		case 5: //Cadastre
 			System.out.println("Quel cadastre voulez-vous voir ? ");
 			break;
+		*/
 		default :
 			break;
 		}
