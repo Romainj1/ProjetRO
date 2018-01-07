@@ -26,7 +26,10 @@ public class Main {
 		// On requête la carte : (à echelle demandé)
 		ResultSet rs = s2r.requeteCarte(ui);
 		
+		//Affiche la carte
 		affichage.afficherResultSet(rs);
+		
+		//Chargement telephone
 		
 		
 		

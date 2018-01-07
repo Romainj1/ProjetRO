@@ -27,7 +27,6 @@ public class str2request {
         resultats = stmt.executeQuery(requete);
         resultats.next();
         
-        bdFrance.deconnexion();
       }catch (SQLException e){
         e.printStackTrace();
         return null;
@@ -35,7 +34,7 @@ public class str2request {
       break;
       case 2 :
       con = this.bdFrance.getConnection();
-      requete  =  "Select * from communes where \"codeDepartement\"='"+in.getZoneID()+"';";
+      requete  =  "Select spatialrepresentation from communes where \"codeDepartement\"='"+in.getZoneID()+"';";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
@@ -48,7 +47,7 @@ public class str2request {
       break;
       case 3 :
       con = this.bdsm.getConnection();
-      requete = "Select * from cadastre where \"code_com\"='"+in.getZoneID()+"';";
+      requete = "Select spatialrepresentation from cadastre where \"code_com\"='"+in.getZoneID()+"';";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
@@ -72,19 +71,19 @@ public class str2request {
     if (in.isUseDates()){
       switch(in.getScale()){
         case 1 :
-          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"';";
+          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"';";
         break;
         case 2 :
-          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idDepartement\"='"+in.getZoneID()+"';";
+          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idDepartement\"='"+in.getZoneID()+"';";
         break;
         case 3 :
-          requete = "Select * from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idCommune\"='"+in.getZoneID()+"';";
+          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idCommune\"='"+in.getZoneID()+"';";
         break;
       }
     }else{
       switch(in.getScale()){
         case 1 :
-          requete = "Select * from spatialisation;";
+          requete = "Select spatialrepresentation from spatialisation;";
         break;
         case 2 :
           requete = "Select * from spatialisation where \"idDepartement\"='"+in.getZoneID()+"';";
