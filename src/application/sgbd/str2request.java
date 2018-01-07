@@ -9,9 +9,13 @@ import org.postgis.*;
 public class str2request {
   private BdOrange bdFrance;
   private BdSeineMaritime bdsm;
+  private Connection conFrance;
+  private Connection conSeineMaritime;
   public str2request(){
     this.bdFrance = new BdOrange();
     this.bdsm = new BdSeineMaritime();
+    this.conFrance = this.bdFrance.getConnection();
+    this.conSeineMaritime = this.bdsm.getConnection();
   }
 
   public ResultSet requeteCarte(UserInputs in){
@@ -20,10 +24,9 @@ public class str2request {
     Connection con;
     switch(in.getScale()){
       case 1 :
-      con = this.bdFrance.getConnection();
       requete = "SELECT spatialrepresentation FROM limitesdepartements;";
       try{
-        Statement stmt = con.createStatement();
+        Statement stmt = this.conFrance.createStatement();
         resultats = stmt.executeQuery(requete);
         resultats.next();
         
@@ -33,31 +36,39 @@ public class str2request {
       }
       break;
       case 2 :
-      con = this.bdFrance.getConnection();
       requete  =  "Select spatialrepresentation from communes where \"codeDepartement\"='"+in.getZoneID()+"';";
       try{
-        Statement stmt = con.createStatement();
+        Statement stmt = this.conFrance.createStatement();
         resultats = stmt.executeQuery(requete);
         resultats.next();
-        bdFrance.deconnexion();
       }catch (SQLException e){
         e.printStackTrace();
         return null;
       }
       break;
       case 3 :
-      con = this.bdsm.getConnection();
       requete = "Select spatialrepresentation from cadastre where \"code_com\"='"+in.getZoneID()+"';";
       try{
-        Statement stmt = con.createStatement();
+        Statement stmt = this.conSeineMaritime.createStatement();
         resultats = stmt.executeQuery(requete);
         resultats.next();
-        bdsm.deconnexion();
       }catch (SQLException e){
         e.printStackTrace();
         return null;
       }
-
+	  break;
+	  case 4 :
+      requete = "Select spatialrepresentation from parcelles where \"code_com\"='"+in.getZoneID()+"';";
+      try{
+        Statement stmt = this.conSeineMaritime.createStatement();
+        resultats = stmt.executeQuery(requete);
+        resultats.next();
+      }catch (SQLException e){
+        e.printStackTrace();
+        return null;
+      }
+	  break;
+	  
     }
     return resultats;
   }
@@ -66,42 +77,42 @@ public class str2request {
   public ResultSet requeteTel(UserInputs in){
     ResultSet resultats = null;
     String requete = "";
-    Connection con;
-    con = this.bdFrance.getConnection();
     if (in.isUseDates()){
+		
       switch(in.getScale()){
         case 1 :
-          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"';";
+          requete = "Select distinct location as spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"';";
+          // Select location as spatialrepresentation from spatialisation where "date" between '2012-01-13 07:32:000' and '2012-01-13 07:33:000';
         break;
         case 2 :
-          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idDepartement\"='"+in.getZoneID()+"';";
+          requete = "Select distinct location as spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idDepartement\"='"+in.getZoneID()+"';";
         break;
-        case 3 :
-          requete = "Select spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idCommune\"='"+in.getZoneID()+"';";
+        case 3 : case 4 :
+          requete = "Select distinct location as spatialrepresentation from spatialisation where \"date\" between '"+in.getStartDate()+"' and '"+in.getEndDate()+"' and \"idCommune\"='76"+in.getZoneID()+"';";
         break;
       }
     }else{
       switch(in.getScale()){
         case 1 :
-          requete = "Select spatialrepresentation from spatialisation;";
+          requete = "Select distinct location as spatialrepresentation from spatialisation;";
         break;
         case 2 :
-          requete = "Select * from spatialisation where \"idDepartement\"='"+in.getZoneID()+"';";
+          requete = "Select distinct location as spatialrepresentation from spatialisation where \"idDepartement\"='"+in.getZoneID()+"';";
         break;
-        case 3 :
-          requete = "Select * from spatialisation where \"idCommune\"='"+in.getZoneID()+"';";
+        case 3 : case 4 :
+          requete = "Select distinct location as spatialrepresentation  from spatialisation where \"idCommune\"='76"+in.getZoneID()+"';";
         break;
     }
   }
   try{
-    Statement stmt = con.createStatement();
+    Statement stmt = this.conFrance.createStatement();
     resultats = stmt.executeQuery(requete);
     resultats.next();
-    bdFrance.deconnexion();
   }catch (SQLException e){
     e.printStackTrace();
     return null;
   }
   return resultats;
   }
+  
 }

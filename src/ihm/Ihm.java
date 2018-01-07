@@ -18,7 +18,8 @@ public class Ihm {
 	/* returns scale
 	 *  1 : France
 	 *  2 : Departement
-	 *  3 : Commune
+	 *  3 : Commune (cadastre)
+	 *  4 : Commune (parcelles)
 	 *  */
 	public static int getScale(){
 		//Print text
@@ -27,9 +28,10 @@ public class Ihm {
 		System.out.println("Seletionnez la lettre correspondant a l'echelle que vous souhaitez, puis appuyez sur Entree");
 		System.out.println("f  : France");
 		System.out.println("d  : Departement");
-		System.out.println("c  : Commune");
+		System.out.println("c  : Commune (cadastre)");
+		System.out.println("p : Commune (parcelles)");
 		/*
-		System.out.println("p  : Parcelle");
+		System.out.println("p  : Parcelle ");
 		System.out.println("ca : Cadastre");
 		*/
 
@@ -49,12 +51,13 @@ public class Ihm {
 					selected = "Vous avez selectionne l'echelle du departement";
 				break;
 			case "c": scale = 3;
-					selected = "Vous avez selectionne l'echelle de la commune";
+					selected = "Vous avez selectionne l'echelle de la commune (cadastres)";
+				break;
+			
+			case "p": scale = 4;
+				selected = "Vous avez selectionne l'echelle de la commune (parcelles)";
 				break;
 			/*
-			case "p": scale = 4;
-			selected = "Vous avez selectionne l'echelle de la parcelle";
-				break;
 			case "ca": scale = 5;
 			selected = "Vous avez selectionne l'echelle du cadastre";
 				break;
@@ -78,10 +81,11 @@ public class Ihm {
 		case 3: //Commune
 			System.out.println("Quelle commune voulez-vous voir ? ");
 			break;
-		/*
+		
 		case 4: //Parcelle
-			System.out.println("Quelle parcelle voulez-vous voir ? ");
+			System.out.println("Quelle commune voulez-vous voir ? ");
 			break;
+		/*
 		case 5: //Cadastre
 			System.out.println("Quel cadastre voulez-vous voir ? ");
 			break;
@@ -148,8 +152,8 @@ public class Ihm {
 		}else
 			time = "fin";
 		System.out.println("Veuillez saisir la date de "+time+" de l'intervalle de temps");
-		System.out.println("Ecrivez la date en respectant le format suivant 'AAAA-MM-JJ hh:mm:ss.cc' sans les guillements, puis appuyez sur Entree"); //A completer
-		System.out.println("Par exemple, pour le 30 decembre 2010 a 18h50 et 21 secondes, ecrivez '2010-12-30 18:50:21.00'");
+		System.out.println("Ecrivez la date en respectant le format suivant 'AAAA-MM-JJ hh:mm:ss.ccc' sans les guillements, puis appuyez sur Entree"); //A completer
+		System.out.println("Par exemple, pour le 30 decembre 2010 a 18h50 et 21 secondes, ecrivez '2010-12-30 18:50:21.000'");
 
 		String date = "";
 		String selected;
@@ -157,12 +161,23 @@ public class Ihm {
 		//While the input is not correct, ask for another input
 		while (date == ""){
 			String str = sc.nextLine();
-			if (str.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9]")){			//A completer
+			
+			if (str.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]")){//A completer
 				date = str;
 				selected = "Vous avez saisi "+date;
 			}
-			else selected = "Entree invalide. Veuillez reessayer";
-			System.out.println(selected);
+		/*	code part to test sql requests
+		 * if (str == 1){
+				return "2012-01-13 07:32:00.000";
+			}else{
+				if (str == 2){
+					return "2012-01-14 18:35:00.000";
+				}*/
+			else{
+				selected = "Entree invalide. Veuillez reessayer";
+				System.out.println(selected);
+				date="";
+			}
 		}
 		return date;
 	}

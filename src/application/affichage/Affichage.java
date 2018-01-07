@@ -15,26 +15,27 @@ import org.postgresql.util.*;
 
 public class Affichage {
 	 Graph graph;
+	 static Integer nomNode;
 	 
 	 public Affichage(){
 		this.graph = new SingleGraph("Projet Théorie des Graphes");
+		nomNode=0;
 	 }
 	 
 	 public void afficherResultSet(ResultSet rs){
 		 try{
-			 Integer nomNode=0;
 			while (rs.next()){
 				 //System.out.println(rs.getString("spatialrepresentation").toString());
 				 //tmpnode = this.graph.addNode(rs.getString("spatialrepresentation").toString());
 				PGgeometry geom = (PGgeometry)rs.getObject(1);
 				
 				if (geom.getGeoType() == Geometry.MULTIPOLYGON ) {
+					
 					MultiPolygon mpl = (MultiPolygon)geom.getGeometry();
-					System.out.println("MULTIPOLYGON");
 					Polygon[] polygons = mpl.getPolygons();
-					System.out.println("pl length"+polygons.length);
+					
 					for(int i=0;i<polygons.length;i++) {
-
+						boolean NewPoly = true;
 						for (int r = 0; r < polygons[i].numRings(); r++) {
 							LinearRing rng = polygons[i].getRing(r);
 							//System.out.println("Ring: " + r);
@@ -50,8 +51,11 @@ public class Affichage {
 								y=pt.getY();
 
 								tmpnode = this.graph.addNode(nomNode.toString());
-								if (nomNode>0)
+								if ((nomNode>0) && !NewPoly){
 									this.graph.addEdge("E"+nomNode.toString(), nomNode-1, nomNode);
+								}else{
+									NewPoly=false;
+								}
 								tmpnode.addAttribute("layout.frozen");
 								tmpnode.addAttribute("xy", x, y);
 								nomNode++;
@@ -59,14 +63,13 @@ public class Affichage {
 						}
 					}
 				}
-					Node tmpnode;
+				Node tmpnode;
 				if (geom.getGeoType() == Geometry.MULTILINESTRING ) {
 					MultiLineString	mls = (MultiLineString)geom.getGeometry();
-					System.out.println("MULTILINES");
+					
 					LineString[] lines = mls.getLines();
 
 					//Polygon[] polygons = mpl.getPolygons();
-					System.out.println("LINES length"+lines.length);
 					
 					for(int i=0;i<lines.length;i++) {
 						
@@ -83,22 +86,37 @@ public class Affichage {
 							}else{
 								newLIne=false;
 							}
-
 							tmpnode.addAttribute("layout.frozen");
 							tmpnode.addAttribute("xy", x, y);
 							nomNode++;
 						}
 					}
 				}
+				if (geom.getGeoType() == Geometry.POINT ) {
+					Point	pt = (Point)geom.getGeometry();
+					double x,y;
+					x=pt.getX();
+					y=pt.getY();
+					
+					tmpnode = this.graph.addNode(nomNode.toString());
+					if (nomNode>0){
+						this.graph.addEdge("E"+nomNode.toString(), nomNode-1, nomNode);
+					}
+					tmpnode.addAttribute("layout.frozen");
+					tmpnode.addAttribute("xy", x, y);
+					nomNode++;
+				}
+					
 			}
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-		this.afficher();
 	 }
 	 
-	 private void afficher(){
+	 public void afficher(){
+		 graph.addAttribute("ui.stylesheet", "  node {	size: 3px;	fill-color: #777;	text-mode: hidden;	z-index: 0;}edge {	shape: line;	fill-color: #222;	arrow-size: 3px, 2px;}");
 		this.graph.display();
+		
 	 }
 	 public void clear(){
 		 this.graph.clear();
