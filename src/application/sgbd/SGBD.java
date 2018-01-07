@@ -5,16 +5,16 @@ import java.sql.SQLException;
 
 public class SGBD {
 
-    protected static String bd ;
-    private static String user = "grtt12";
-    private static String passwd = "grtt12";
+    private String bd ;
+    private String user = "grtt12";
+    private String passwd = "grtt12";
 
-    private static Connection conn;
+    private Connection conn;
     public SGBD(String bd){
       this.bd = bd;
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         if (conn == null) {
             try {
                 conn = DriverManager.getConnection(bd, user, passwd);
@@ -25,7 +25,7 @@ public class SGBD {
         return conn;
     }
 
-    public static void deconnexion() throws SQLException {
+    public void deconnexion() throws SQLException {
 
         conn.close();
     }

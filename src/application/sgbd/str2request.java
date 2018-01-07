@@ -3,6 +3,7 @@ import application.sgbd.SGBD;
 import application.sgbd.BdSeineMaritime;
 import java.sql.*;
 import ihm.UserInputs;
+import org.postgis.*;
 
 
 public class str2request {
@@ -20,11 +21,12 @@ public class str2request {
     switch(in.getScale()){
       case 1 :
       con = this.bdFrance.getConnection();
-      requete = "Select * from limitesdepartements;";
+      requete = "SELECT spatialrepresentation FROM limitesdepartements;";
       try{
         Statement stmt = con.createStatement();
         resultats = stmt.executeQuery(requete);
         resultats.next();
+        
         bdFrance.deconnexion();
       }catch (SQLException e){
         e.printStackTrace();
